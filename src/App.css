@@ -37,10 +37,22 @@ body {
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 250px;
   border-radius: 1em;
   background-color: white;
   cursor: pointer;
+}
+
+.card-image {
+  height: 90%;
+  align-self: center;
+}
+
+.card-name::first-letter {
+  text-transform: capitalize;
 }
 
 .checked {

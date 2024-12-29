@@ -7,6 +7,8 @@ import GameBoard from "./components/GameBoard";
 function App() {
   const [render, setRender] = useState(false);
   const [data, setData] = useState([]);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
   useEffect(() => {
     if (!render) {
@@ -38,12 +40,23 @@ function App() {
   };
 
   const handleCheckCard = (name) => {
-    setData((prevData) => {
-      const updatedData = prevData.map((card) =>
-        card.name === name ? { ...card, isChecked: true } : card
-      );
-      return shuffleCards(updatedData);
-    });
+    const pokemon = data.find((pokemon) => pokemon.name === name);
+
+    if (pokemon.isChecked) {
+      fetchData();
+
+      setScore(0);
+    } else {
+      setData((prevData) => {
+        const updatedData = prevData.map((card) =>
+          card.name === name ? { ...card, isChecked: true } : card
+        );
+        return shuffleCards(updatedData);
+      });
+
+      setScore((prevData) => prevData + 1);
+      setHighScore(score + 1);
+    }
   };
 
   const shuffleCards = (cards) => {
@@ -62,7 +75,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header score={score} highScore={highScore} />
       <GameBoard data={data} checkCard={handleCheckCard} />
       <img src="" alt="test" />
       <button onClick={() => console.log(data)}>test</button>
