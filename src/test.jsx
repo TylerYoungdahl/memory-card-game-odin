@@ -38,32 +38,20 @@ function App() {
   };
 
   const handleCheckCard = (name) => {
-    setData((prevData) => {
-      const updatedData = prevData.map((card) =>
+    setData((prevData) =>
+      prevData.map((card) =>
         card.name === name ? { ...card, isChecked: true } : card
-      );
-      return shuffleCards(updatedData);
-    });
+      )
+    );
   };
-
-  const shuffleCards = (cards) => {
-    const shuffled = cards.slice();
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const randomIndex = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[randomIndex]] = [
-        shuffled[randomIndex],
-        shuffled[i],
-      ];
-    }
-    return shuffled;
-  };
-
-  const resetCards = (cards) => {};
 
   return (
     <>
       <Header />
-      <GameBoard data={data} checkCard={handleCheckCard} />
+      <GameBoard
+        data={data}
+        checkCard={(name) => handleCheckCard(name)}
+      />
       <img src="" alt="test" />
       <button onClick={() => console.log(data)}>test</button>
     </>
@@ -71,3 +59,14 @@ function App() {
 }
 
 export default App;
+
+
+export default function Card({ name, src, checkCard }) {
+    return (
+      <div className="card" onClick={() => checkCard(name)}>
+        <img src={src} className="card-image" />
+        <div className="card-name">{name}</div>
+      </div>
+    );
+  }
+  

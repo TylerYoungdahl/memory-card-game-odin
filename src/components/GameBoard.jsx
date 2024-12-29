@@ -1,15 +1,15 @@
 import Card from "./Card";
 
-export default function GameBoard({ data }) {
+export default function GameBoard({ data, checkCard }) {
   return (
     <div className="board">
       {data.map((item) => {
         return (
           <Card
             key={item.name}
-            className="card"
             name={item.name}
             src={item.src}
+            checkCard={checkCard}
           />
         );
       })}
